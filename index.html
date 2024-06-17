@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gradient-Generator</title>
+    <link rel="stylesheet" href="boiler.css">
+<style>
+html, body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+}
+
+.container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    width: 100%;
+    height: 100%;
+    background-color: linear-gradient(to right, rgb(#B50406), rgb(#0307C9))
+}
+.box {
+    height: 360px;
+    width: 350px;
+}
+.box > button {
+    padding: 10px;
+    border-radius: 20px;
+}
+.flexbox {
+    display: flex;
+    flex-direction: column;
+    border: 1px solid grey;
+    border-left: 2px solid white;
+    height: 100px;
+    justify-content: center;
+    align-items: flex-start;
+    padding: 5px;
+    color: white;
+    box-sizing: border-box;
+    width: auto;
+}
+</style>
+</head>
+<body>
+<div class="container">
+    <div class="box" style="padding-top:50px;">
+        <button id="myButton" style="background-color: #051937;color:white;">Color*1</button>
+        <button id="myButton2" style="background-color: #008793;color:white;">Color*2</button>
+        <p style="margin-top: 10px;color: white;">Copy your color code here: </p>
+        <div class="flexbox" id="flexbox">
+            <p id="colorCode">background-color: linear-gradient(to right, rgb(<span id="rbg1">92,145, 229</span>), rgb(<span id="rbg2">152,63,1983</span>))</p>
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+    var btn1 = document.getElementById("myButton");
+    var btn2 = document.getElementById("myButton2");
+//background-color: linear-gradient(to right, rgb(#B50406), rgb(#0307C9))
+    let color1 = "#B50406"; // initial left color
+    let color2 = "#0307C9"; // initial right color
+
+    const hexValues = () => {
+        let myhexa = "0123456789ABCDEF";
+        let colors = "#";
+        for (let i = 0; i < 6; i++) {
+            colors += myhexa[Math.floor(Math.random() * 16)];
+        }
+        return colors;
+    }
+
+    const updateBackground = () => {
+        document.querySelector('.container').style.backgroundImage =
+            `linear-gradient(to right, ${color1}, ${color2})`;
+        document.getElementById('rbg1').innerText = color1;
+        document.getElementById('rbg2').innerText = color2;
+    };
+
+    const handleButton1 = () => {
+        color1 = hexValues();
+        updateBackground();
+        btn1.innerText = color1;
+    };
+
+    const handleButton2 = () => {
+        color2 = hexValues();
+        updateBackground();
+        btn2.innerText = color2;
+    };
+
+    const handleCopy = () => {
+        var colorCode = document.getElementById('colorCode').innerText;
+        navigator.clipboard.writeText(colorCode);
+    };
+
+    btn1.addEventListener('click', handleButton1);
+    btn2.addEventListener('click', handleButton2);
+
+    var mydiv = document.getElementById('flexbox');
+    mydiv.addEventListener('click', handleCopy);
+
+    updateBackground(); // Initialize with initial colors
+</script>
+</body>
+</html>
